@@ -1,22 +1,31 @@
 {
+    "version": 2,
+    "name": "ediaru",
     "builds": [
-      {
-        "src": "ediary/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-      },
-      {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "staticfiles"
-        }
-      }
+       {
+         "src": "manage.py",
+         "use": "@vercel/python",
+         "config": {
+           "build": {
+             "env": {
+               "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+             }
+           }
+         }
+       }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "ediary/wsgi.py"
-      }
+       {
+         "src": "/static/(.*)",
+         "dest": "/static/$1"
+       },
+       {
+         "src": "/media/(.*)",
+         "dest": "/media/$1"
+       },
+       {
+         "src": "/(.*)",
+         "dest": "manage.py"
+       }
     ]
-  }
+   }
